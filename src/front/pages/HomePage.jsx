@@ -1,43 +1,36 @@
 import React, { useEffect } from "react"
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import trabajandoImageUrl from "../imagenes/trabajando.jpg";
+import { Link } from "react-router-dom";
 
 export const HomePage = () => {
 
     const { store, dispatch } = useGlobalReducer()
 
-    const loadMessage = async () => {
-        try {
-            const backendUrl = import.meta.env.VITE_BACKEND_URL
-
-            if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
-
-            const response = await fetch(backendUrl + "/api/hello")
-            const data = await response.json()
-
-            if (response.ok) dispatch({ type: "set_hello", payload: data.message })
-
-            return data
-
-        } catch (error) {
-            if (error.message) throw new Error(
-                `Could not fetch the message from the backend.
-                Please check if the backend is running and the backend port is public.`
-            );
-        }
-
-    }
-
     useEffect(() => {
-        loadMessage()
     }, [])
 
     return (
+        <>
         <div className="text-center mt-5">
-            <h1 className="display-4">Home Page</h1>
-            <button className="btn btn-primary" >Sing Up User</button>
-            <button className="btn btn-primary ms-2">Sing Up Admin</button>
-            <button className="btn btn-primary ms-2">login</button>
+            <h1 className="display-4">Bienvenido a tu Pagina de Reservas</h1>
+            <p className="lead">Aqui podras registrarte, iniciar sesion y reservar tu espacio en el gimnasio</p>
+            <img className="w-25 rounded-circle p-4" src={trabajandoImageUrl}/>
+            <h2>Desarrollando Tu Proxima APP</h2>
         </div>
+
+        <div className="d-flex justify-content-center mt-3">
+            <Link to="/signup">
+            <button className="btn btn-primary" >Sing Up User</button>
+            </Link>
+            <Link to="/signup/admin">
+            <button className="btn btn-primary ms-2">Sing Up Admin</button>
+            </Link>
+            <Link to="/login">
+            <button className="btn btn-primary ms-2">login</button>
+            </Link>
+        </div>
+        </>
     );
 }; 
